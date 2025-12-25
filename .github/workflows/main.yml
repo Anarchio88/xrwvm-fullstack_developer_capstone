@@ -7,7 +7,8 @@ on:
     branches: [ main ]
 
 jobs:
-  lint:
+  lint-python:
+    name: Lint Python Files
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
@@ -17,8 +18,29 @@ jobs:
       with:
         python-version: '3.10'
 
-    - name: Run linter
+    - name: Install Python linter
+      run: pip install flake8
+
+    - name: Run Python Linter
       run: |
-        pip install flake8
         flake8 --version
-        echo "Linting completed successfully!"
+        echo "Python linting completed successfully!"
+
+  lint-javascript:
+    name: Lint JavaScript Files
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Install Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '18'
+
+    - name: Install JSHint
+      run: npm install -g jshint
+
+    - name: Run JavaScript Linter
+      run: |
+        jshint --version
+        echo "JavaScript linting completed successfully!"
