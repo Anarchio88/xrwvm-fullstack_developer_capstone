@@ -25,4 +25,4 @@ This is a full-stack web application for a car dealership. It allows users to br
 4. Start the React frontend
 
 ## Author
-Lounis Simouheb
+Lounissi Mouhab
