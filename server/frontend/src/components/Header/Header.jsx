@@ -1,71 +1,80 @@
 import React from 'react';
 import "../assets/style.css";
-import "../assets/bootstrap.min.css";
 
 const Header = () => {
-    const logout = async (e) => {
-    e.preventDefault();
-    let logout_url = window.location.origin+"/djangoapp/logout";
+  const logout = async () => {
+    let logout_url = window.location.origin + "/djangoapp/logout";
     const res = await fetch(logout_url, {
-      method: "GET",
+      method: "GET"
     });
-  
+
     const json = await res.json();
     if (json) {
-      let username = sessionStorage.getItem('username');
-      sessionStorage.removeItem('username');
+      sessionStorage.removeItem("userName");
       window.location.href = window.location.origin;
-      window.location.reload();
-      alert("Logging out "+username+"...")
-    }
-    else {
-      alert("The user could not be logged out.")
     }
   };
-    
-//The default home page items are the login details panel
-let home_page_items =  <div></div>
 
-//Gets the username in the current session
-let curr_user = sessionStorage.getItem('username')
+  let userName = sessionStorage.getItem("userName");
+  let isLoggedIn = userName !== null && userName !== "";
 
-//If the user is logged in, show the username and logout option on home page
-if ( curr_user !== null &&  curr_user !== "") {
-    home_page_items = <div className="input_panel">
-      <text className='username'>{sessionStorage.getItem("username")}</text>
-    <a className="nav_item" href="/djangoapp/logout" onClick={logout}>Logout</a>
-  </div>
-}
-    return (
-        <div>
-          <nav class="navbar navbar-expand-lg navbar-light" style={{backgroundColor:"darkturquoise",height:"1in"}}>
-            <div class="container-fluid">
-              <h2 style={{paddingRight: "5%"}}>Dealerships</h2>
-              <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-              </button>
-              <div class="collapse navbar-collapse" id="navbarText">
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                  <li class="nav-item">
-                    <a class="nav-link active" style={{fontSize: "larger"}} aria-current="page" href="/">Home</a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link" style={{fontSize: "larger"}} href="/about">About Us</a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link" style={{fontSize: "larger"}} href="/contact">Contact Us</a>
-                  </li>
-                </ul>
-                <span class="navbar-text">
-                  <div class="loginlink" id="loginlogout">
-                  {home_page_items}
-                  </div>
-                  </span>
-              </div>
-            </div>
-          </nav>
-        </div>
-    )
-}
+  return (
+    <nav className="navbar"
+      style={{
+        display: 'flex',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        padding: '15px 30px',
+        backgroundColor: '#1a5276',
+        color: 'white'
+      }}>
+      <div style={{ fontSize: '20px', fontWeight: 'bold' }}>
+        <a href="/" style={{ color: 'white', textDecoration: 'none' }}>Dealerships</a>
+      </div>
+      <div style={{ display: 'flex', alignItems: 'center', gap: '20px' }}>
+        <a href="/" style={{ color: 'white', textDecoration: 'none' }}>Home</a>
+        <a href="/about" style={{ color: 'white', textDecoration: 'none' }}>About Us</a>
+        <a href="/contact" style={{ color: 'white', textDecoration: 'none' }}>Contact Us</a>
+        <a href="/dealers" style={{ color: 'white', textDecoration: 'none' }}>Dealers</a>
+        {isLoggedIn ? (
+          <>
+            <span>Welcome, {userName}!</span>
+            <button onClick={logout}
+              style={{
+                backgroundColor: 'white',
+                color: '#1a5276',
+                border: 'none',
+                padding: '8px 15px',
+                borderRadius: '5px',
+                cursor: 'pointer'
+              }}>
+              Logout
+            </button>
+          </>
+        ) : (
+          <>
+            <a href="/login"
+              style={{
+                backgroundColor: 'white',
+                color: '#1a5276',
+                padding: '8px 15px',
+                borderRadius: '5px',
+                textDecoration: 'none'
+              }}>Login</a>
+            <a href="/register"
+              style={{
+                backgroundColor: 'transparent',
+                color: 'white',
+                padding: '8px 15px',
+                border: '1px solid white',
+                borderRadius: '5px',
+                textDecoration: 'none'
+              }}>Register</a>
+          </>
+        )}
+      </div>
+    </nav>
+  );
+};
 
-export default Header
+export default Header;
