@@ -17,9 +17,14 @@ SECRET_KEY = 'django-insecure-ccf)k_w1a8iq-^&ba%8t-)1hs)5uu+8rv*@4@y^k=+c8)t^0!-
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1']
+ALLOWED_HOSTS = ['*']
 
-CSRF_TRUSTED_ORIGINS = ['https://*.us-south.codeengine.appdomain.cloud']
+CSRF_TRUSTED_ORIGINS = [
+    'https://*.us-south.codeengine.appdomain.cloud',
+    'https://*.theiadockernext-1-labs-prod-theiak8s-4-tor01.proxy.cognitiveclass.ai',
+    'https://*.proxy.cognitiveclass.ai',
+    'https://*.theiadocker.cloud',
+]
 
 # Application definition
 
